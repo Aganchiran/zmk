@@ -28,6 +28,13 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #define SAT_MAX 100
 #define BRT_MAX 100
 
+// START Custom Code: Limit Brightness
+#define BRT_MAX_CAP 40
+#define BRT_MIN_CAP 10
+
+static int maxBrtSet = BRT_MAX_CAP;
+// END Custom Code: Limit Brightness
+
 enum rgb_underglow_effect {
     UNDERGLOW_EFFECT_SOLID,
     UNDERGLOW_EFFECT_BREATHE,
@@ -54,48 +61,58 @@ static struct rgb_underglow_state state;
 static const struct device *ext_power;
 #endif
 
+static int compute_max_brt_set(struct zmk_led_hsb color) {
+    if (color.b > BRT_MAX_CAP) {
+        return BRT_MAX_CAP;
+    } else if (color.b < BRT_MIN_CAP) {
+        return BRT_MIN_CAP;
+    } else {
+        return color.b;
+    }
+}
+
 static struct led_rgb hsb_to_rgb(struct zmk_led_hsb hsb) {
     double r, g, b;
 
     uint8_t i = hsb.h / 60;
-    double v = hsb.b / ((float)BRT_MAX);
-    double s = hsb.s / ((float)SAT_MAX);
-    double f = hsb.h / ((float)HUE_MAX) * 6 - i;
+    double v = hsb.b / ((float) BRT_MAX);
+    double s = hsb.s / ((float) SAT_MAX);
+    double f = hsb.h / ((float) HUE_MAX) * 6 - i;
     double p = v * (1 - s);
     double q = v * (1 - f * s);
     double t = v * (1 - (1 - f) * s);
 
     switch (i % 6) {
-    case 0:
-        r = v;
-        g = t;
-        b = p;
-        break;
-    case 1:
-        r = q;
-        g = v;
-        b = p;
-        break;
-    case 2:
-        r = p;
-        g = v;
-        b = t;
-        break;
-    case 3:
-        r = p;
-        g = q;
-        b = v;
-        break;
-    case 4:
-        r = t;
-        g = p;
-        b = v;
-        break;
-    case 5:
-        r = v;
-        g = p;
-        b = q;
-        break;
+        case 0:
+            r = v;
+            g = t;
+            b = p;
+            break;
+        case 1:
+            r = q;
+            g = v;
+            b = p;
+            break;
+        case 2:
+            r = p;
+            g = v;
+            b = t;
+            break;
+        case 3:
+            r = p;
+            g = q;
+            b = v;
+            break;
+        case 4:
+            r = t;
+            g = p;
+            b = v;
+            break;
+        case 5:
+            r = v;
+            g = p;
+            b = q;
+            break;
     }
 
     struct led_rgb rgb = {r : r * 255, g : g * 255, b : b * 255};
@@ -150,18 +167,18 @@ static void zmk_rgb_underglow_effect_swirl() {
 
 static void zmk_rgb_underglow_tick(struct k_work *work) {
     switch (state.current_effect) {
-    case UNDERGLOW_EFFECT_SOLID:
-        zmk_rgb_underglow_effect_solid();
-        break;
-    case UNDERGLOW_EFFECT_BREATHE:
-        zmk_rgb_underglow_effect_breathe();
-        break;
-    case UNDERGLOW_EFFECT_SPECTRUM:
-        zmk_rgb_underglow_effect_spectrum();
-        break;
-    case UNDERGLOW_EFFECT_SWIRL:
-        zmk_rgb_underglow_effect_swirl();
-        break;
+        case UNDERGLOW_EFFECT_SOLID:
+            zmk_rgb_underglow_effect_solid();
+            break;
+        case UNDERGLOW_EFFECT_BREATHE:
+            zmk_rgb_underglow_effect_breathe();
+            break;
+        case UNDERGLOW_EFFECT_SPECTRUM:
+            zmk_rgb_underglow_effect_spectrum();
+            break;
+        case UNDERGLOW_EFFECT_SWIRL:
+            zmk_rgb_underglow_effect_swirl();
+            break;
     }
 
     led_strip_update_rgb(led_strip, pixels, STRIP_NUM_PIXELS);
@@ -225,16 +242,16 @@ static int zmk_rgb_underglow_init(const struct device *_arg) {
     }
 #endif
 
-    state = (struct rgb_underglow_state){
-        color : {
-            h : CONFIG_ZMK_RGB_UNDERGLOW_HUE_START,
-            s : CONFIG_ZMK_RGB_UNDERGLOW_SAT_START,
-            b : CONFIG_ZMK_RGB_UNDERGLOW_BRT_START,
-        },
-        animation_speed : CONFIG_ZMK_RGB_UNDERGLOW_SPD_START,
-        current_effect : CONFIG_ZMK_RGB_UNDERGLOW_EFF_START,
-        animation_step : 0,
-        on : IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_ON_START)
+    state = (struct rgb_underglow_state) {
+            color : {
+                    h : CONFIG_ZMK_RGB_UNDERGLOW_HUE_START,
+                    s : CONFIG_ZMK_RGB_UNDERGLOW_SAT_START,
+                    b : CONFIG_ZMK_RGB_UNDERGLOW_BRT_START,
+            },
+            animation_speed : CONFIG_ZMK_RGB_UNDERGLOW_SPD_START,
+            current_effect : CONFIG_ZMK_RGB_UNDERGLOW_EFF_START,
+            animation_step : 0,
+            on : IS_ENABLED(CONFIG_ZMK_RGB_UNDERGLOW_ON_START)
     };
 
 #if IS_ENABLED(CONFIG_SETTINGS)
@@ -307,7 +324,7 @@ int zmk_rgb_underglow_off() {
 #endif
 
     for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
-        pixels[i] = (struct led_rgb){r : 0, g : 0, b : 0};
+        pixels[i] = (struct led_rgb) {r : 0, g : 0, b : 0};
     }
 
     led_strip_update_rgb(led_strip, pixels, STRIP_NUM_PIXELS);
@@ -338,6 +355,14 @@ int zmk_rgb_underglow_set_hsb(struct zmk_led_hsb color) {
     if (color.h > HUE_MAX || color.s > SAT_MAX || color.b > BRT_MAX) {
         return -ENOTSUP;
     }
+
+// START Custom Code: Limit Brightness
+    if (color.b != state.color.b) {
+        maxBrtSet = compute_max_brt_set(color);
+    }
+
+    color.b = BRT_MIN_CAP + (maxBrtSet - BRT_MIN_CAP) * (color.s / (double) SAT_MAX);
+// END Custom Code: Limit Brightness
 
     state.color = color;
 
