@@ -27,6 +27,13 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
 
+    const struct device* keyPressBinding = device_get_binding("KEY_PRESS");
+    const struct zmk_behavior_binding keyBinding = { keyPressBinding->name, binding->param1, binding->param2 };
+    behavior_keymap_binding_pressed(&keyBinding, event);
+    behavior_keymap_binding_released(&keyBinding, event);
+    behavior_keymap_binding_pressed(&keyBinding, event);
+    behavior_keymap_binding_released(&keyBinding, event);
+
     return ZMK_BEHAVIOR_OPAQUE;
 }
 
