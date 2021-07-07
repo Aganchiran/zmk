@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/ {
+	behaviors {
+		/omit-if-no-ref/ kkp: behavior_key_key_press {
+			compatible = "zmk,behavior-key-key-press";
+			label = "KEY_KEY_PRESS";
+			#binding-cells = <2>;
+		};
+	};
+};
