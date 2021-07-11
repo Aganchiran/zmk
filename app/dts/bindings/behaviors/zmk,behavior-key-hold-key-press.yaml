@@ -1,0 +1,8 @@
+# Copyright (c) 2021 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: Key and key press/release behavior
+
+compatible: "zmk,behavior-key-hold-key-press"
+
+include: two_param.yaml

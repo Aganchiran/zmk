@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/ {
+	behaviors {
+		/omit-if-no-ref/ khkp: behavior_key_hold_key_press {
+			compatible = "zmk,behavior-key-hold-key-press";
+			label = "KEY_HOLD_KEY_PRESS";
+			#binding-cells = <2>;
+		};
+	};
+};

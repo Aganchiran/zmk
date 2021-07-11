@@ -29,7 +29,7 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #define BRT_MAX 100
 
 // START Custom Code: Limit Brightness
-#define BRT_MAX_CAP 40
+#define BRT_MAX_CAP 30
 #define BRT_MIN_CAP 10
 
 static int maxBrtSet = BRT_MAX_CAP;
@@ -170,12 +170,13 @@ static void zmk_rgb_underglow_tick(struct k_work *work) {
         case UNDERGLOW_EFFECT_SOLID:
             zmk_rgb_underglow_effect_solid();
             break;
-        case UNDERGLOW_EFFECT_BREATHE:
-            zmk_rgb_underglow_effect_breathe();
-            break;
+        //case UNDERGLOW_EFFECT_BREATHE:
+        //    zmk_rgb_underglow_effect_breathe();
+        //    break;
         case UNDERGLOW_EFFECT_SPECTRUM:
             zmk_rgb_underglow_effect_spectrum();
             break;
+        case UNDERGLOW_EFFECT_BREATHE:
         case UNDERGLOW_EFFECT_SWIRL:
             zmk_rgb_underglow_effect_swirl();
             break;

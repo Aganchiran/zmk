@@ -46,6 +46,7 @@ target_sources_ifdef(CONFIG_ZMK_EXT_POWER app PRIVATE src/behaviors/behavior_ext
 if ((NOT CONFIG_ZMK_SPLIT) OR CONFIG_ZMK_SPLIT_BLE_ROLE_CENTRAL)
   target_sources(app PRIVATE src/behaviors/behavior_key_press.c)
   target_sources(app PRIVATE src/behaviors/behavior_key_key_press.c)
+  target_sources(app PRIVATE src/behaviors/behavior_key_hold_key_press.c)
   target_sources(app PRIVATE src/behaviors/behavior_hold_tap.c)
   target_sources(app PRIVATE src/behaviors/behavior_sticky_key.c)
   target_sources(app PRIVATE src/behaviors/behavior_momentary_layer.c)

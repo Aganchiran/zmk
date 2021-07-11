@@ -10,12 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0f40e6c-6dd3-48f1-9021-200c51548583" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.vscode/c_cpp_properties.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vscode/c_cpp_properties.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dts/behaviors.dtsi" beforeDir="false" afterPath="$PROJECT_DIR$/app/dts/behaviors.dtsi" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dts/behaviors/key_space_press.dtsi" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dts/bindings/behaviors/zmk,behavior-key-space-press.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/behaviors/behavior_key_space_press.c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/rgb_underglow.c" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/rgb_underglow.c" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,10 +34,26 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
     <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/dts/bindings/behaviors" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\dev\Corne-ble\zmk\app\dts\bindings\behaviors" />
+      <recent name="F:\dev\Corne-ble\zmk\app\dts\behaviors" />
+      <recent name="F:\dev\Corne-ble\zmk\app\src\behaviors" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -51,6 +65,7 @@
       <updated>1625399455243</updated>
       <workItem from="1625399456798" duration="12000" />
       <workItem from="1625399473669" duration="903000" />
+      <workItem from="1626008811701" duration="3184000" />
     </task>
     <servers />
   </component>
@@ -58,9 +73,17 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="781" y="253" width="585" height="534" key="find.popup" timestamp="1625399773399">
+    <state x="336" y="321" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1626019869635">
       <screen x="0" y="0" width="2560" height="1040" />
     </state>
-    <state x="781" y="253" width="585" height="534" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1625399773399" />
+    <state x="336" y="321" key="#com.intellij.fileTypes.FileTypeChooser/0.0.2560.1040@0.0.2560.1040" timestamp="1626019869635" />
+    <state x="308" y="9" width="2046" height="868" key="find.popup" timestamp="1626020077908">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="308" y="9" width="2046" height="868" key="find.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1626020077908" />
+    <state x="600" y="236" width="672" height="678" key="search.everywhere.popup" timestamp="1626019830880">
+      <screen x="0" y="0" width="2560" height="1040" />
+    </state>
+    <state x="600" y="236" width="672" height="678" key="search.everywhere.popup/0.0.2560.1040@0.0.2560.1040" timestamp="1626019830880" />
   </component>
 </project>
