@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\zmk-config"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"keycode_state_changed.h": "c",
+			"ext_power.h": "c",
+			"device.h": "c",
+			"limits": "c"
+		}
+	}
+}

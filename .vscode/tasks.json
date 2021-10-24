@@ -13,6 +13,12 @@
       }
     },
     {
+      "label": "Build Split",
+      "type": "shell",
+      "command": "cd app && west build -d build/left -p -b nrfmicro_13 -- -DSHIELD=corne_left -DZMK_CONFIG=\"F:/dev/Corne-ble/zmk-config/config\" && west build -d build/right -p -b nrfmicro_13 -- -DSHIELD=corne_right -DZMK_CONFIG=\"F:/dev/Corne-ble/zmk-config/config\"",
+      "group": "build"
+    },
+    {
       "label": "Flash",
       "type": "shell",
       "command": "cd app && west flash",

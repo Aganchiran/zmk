@@ -27,7 +27,7 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
                                      struct zmk_behavior_binding_event event) {
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
 
-    const struct device* keyPressBinding = device_get_binding("KEY_PRESS");
+    /*const struct device* keyPressBinding = device_get_binding("KEY_PRESS");
 
     char bindingName[strlen(keyPressBinding->name)];
     strcpy(bindingName, keyPressBinding->name); // Copy to avoid const change
@@ -38,8 +38,17 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
     behavior_keymap_binding_pressed(&keyBinding1, event);
     behavior_keymap_binding_released(&keyBinding1, event);
     behavior_keymap_binding_pressed(&keyBinding2, event);
-    behavior_keymap_binding_released(&keyBinding2, event);
+    behavior_keymap_binding_released(&keyBinding2, event);*/
 
+    ZMK_EVENT_RAISE(
+            zmk_keycode_state_changed_from_encoded(binding->param1, true, event.timestamp));
+        ZMK_EVENT_RAISE(
+            zmk_keycode_state_changed_from_encoded(binding->param1, false, event.timestamp));
+        ZMK_EVENT_RAISE(
+            zmk_keycode_state_changed_from_encoded(binding->param2, true, event.timestamp));
+        ZMK_EVENT_RAISE(
+            zmk_keycode_state_changed_from_encoded(binding->param2, false, event.timestamp));
+        
     return ZMK_BEHAVIOR_OPAQUE;
 }
 

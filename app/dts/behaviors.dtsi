@@ -1,4 +1,5 @@
 #include <behaviors/key_press.dtsi>
+#include <behaviors/pad_code.dtsi>
 #include <behaviors/key_key_press.dtsi>
 #include <behaviors/key_hold_key_press.dtsi>
 #include <behaviors/transparent.dtsi>

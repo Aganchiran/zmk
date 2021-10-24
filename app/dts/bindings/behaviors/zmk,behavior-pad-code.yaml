@@ -1,0 +1,8 @@
+# Copyright (c) 2021 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+description: keypad code insert/release behavior
+
+compatible: "zmk,behavior-pad-code"
+
+include: two_param.yaml

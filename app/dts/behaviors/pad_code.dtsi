@@ -1,0 +1,15 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/ {
+	behaviors {
+		/omit-if-no-ref/ pc: behavior_pad_code {
+			compatible = "zmk,behavior-pad-code";
+			label = "PAD_CODE";
+			#binding-cells = <2>;
+		};
+	};
+};

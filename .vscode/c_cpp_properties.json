@@ -15,7 +15,7 @@
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-arm",
-            "compileCommands": "${workspaceFolder}/app/build/left/compile_commands.json;${workspaceFolder}/app/build/compile_commands.json"
+            "compileCommands": "${workspaceFolder}/app/build/compile_commands.json"
         }
     ],
     "version": 4

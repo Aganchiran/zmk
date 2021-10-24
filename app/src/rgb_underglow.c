@@ -19,6 +19,8 @@
 
 #include <zmk/rgb_underglow.h>
 
+#include <zmk/display.h>
+
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
 #define STRIP_LABEL DT_LABEL(DT_CHOSEN(zmk_underglow))
@@ -36,8 +38,8 @@ static int maxBrtSet = BRT_MAX_CAP;
 // END Custom Code: Limit Brightness
 
 enum rgb_underglow_effect {
-    UNDERGLOW_EFFECT_SOLID,
-    UNDERGLOW_EFFECT_BREATHE,
+    UNDERGLOW_EFFECT_SOLID,    
+    //UNDERGLOW_EFFECT_BREATHE,
     UNDERGLOW_EFFECT_SPECTRUM,
     UNDERGLOW_EFFECT_SWIRL,
     UNDERGLOW_EFFECT_NUMBER // Used to track number of underglow effects
@@ -126,6 +128,7 @@ static void zmk_rgb_underglow_effect_solid() {
     }
 }
 
+/*
 static void zmk_rgb_underglow_effect_breathe() {
     for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
         struct zmk_led_hsb hsb = state.color;
@@ -140,6 +143,7 @@ static void zmk_rgb_underglow_effect_breathe() {
         state.animation_step = 0;
     }
 }
+*/
 
 static void zmk_rgb_underglow_effect_spectrum() {
     for (int i = 0; i < STRIP_NUM_PIXELS; i++) {
@@ -176,7 +180,6 @@ static void zmk_rgb_underglow_tick(struct k_work *work) {
         case UNDERGLOW_EFFECT_SPECTRUM:
             zmk_rgb_underglow_effect_spectrum();
             break;
-        case UNDERGLOW_EFFECT_BREATHE:
         case UNDERGLOW_EFFECT_SWIRL:
             zmk_rgb_underglow_effect_swirl();
             break;
@@ -301,6 +304,9 @@ int zmk_rgb_underglow_on() {
         if (rc != 0) {
             LOG_ERR("Unable to enable EXT_POWER: %d", rc);
         }
+        /*else {
+            zmk_display_init();
+        }*/
     }
 #endif
 
