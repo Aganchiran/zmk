@@ -21,7 +21,7 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-static void getDigits(uint32_t number, uint32_t out_digits[]) {
+static uint32_t getDigits(uint32_t number, uint32_t out_digits[]) {
     uint32_t lastDigit = UINT32_MAX;
     uint32_t digits[DIGITS_IN_UINT32_T] = { 0 }; // max digits in uint32_t
     uint32_t iteration = 9;
@@ -46,6 +46,8 @@ static void getDigits(uint32_t number, uint32_t out_digits[]) {
 
     memcpy(out_digits, digits + (DIGITS_IN_UINT32_T - numberOfDigits), 
             numberOfDigits * sizeof(uint32_t));
+
+    return numberOfDigits;
 }
 
 static uint32_t getKeycode(uint32_t number){
@@ -94,7 +96,7 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
     LOG_DBG("position %d keycode 0x%02X", event.position, binding->param1);
 
     uint32_t digits[DIGITS_IN_UINT32_T] = { 0 }; // max digits in uint32_t
-    getDigits(binding->param2, digits);
+    uint32_t numberOfDigits = getDigits(binding->param2, digits);
 
     ZMK_EVENT_RAISE(
             zmk_keycode_state_changed_from_encoded(LALT, true, event.timestamp));
@@ -106,18 +108,13 @@ static int on_keymap_binding_pressed(struct zmk_behavior_binding *binding,
             zmk_keycode_state_changed_from_encoded(KP_N0, false, event.timestamp));
     }
 
-    ZMK_EVENT_RAISE(
-        zmk_keycode_state_changed_from_encoded(getKeycode(digits[0]), true, event.timestamp));
-    ZMK_EVENT_RAISE(
-        zmk_keycode_state_changed_from_encoded(getKeycode(digits[0]), false, event.timestamp));
-    ZMK_EVENT_RAISE(
-        zmk_keycode_state_changed_from_encoded(getKeycode(digits[1]), true, event.timestamp));
-    ZMK_EVENT_RAISE(
-        zmk_keycode_state_changed_from_encoded(getKeycode(digits[1]), false, event.timestamp));
-    ZMK_EVENT_RAISE(
-        zmk_keycode_state_changed_from_encoded(getKeycode(digits[2]), true, event.timestamp));
-    ZMK_EVENT_RAISE(
-        zmk_keycode_state_changed_from_encoded(getKeycode(digits[2]), false, event.timestamp));
+    for (uint32_t i = 0; i < numberOfDigits; i++)
+    {
+        ZMK_EVENT_RAISE(
+            zmk_keycode_state_changed_from_encoded(getKeycode(digits[i]), true, event.timestamp));
+        ZMK_EVENT_RAISE(
+            zmk_keycode_state_changed_from_encoded(getKeycode(digits[i]), false, event.timestamp));
+    }
     
     ZMK_EVENT_RAISE(
         zmk_keycode_state_changed_from_encoded(LALT, false, event.timestamp));
